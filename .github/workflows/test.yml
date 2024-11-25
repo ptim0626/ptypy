@@ -50,6 +50,7 @@ jobs:
     - uses: conda-incubator/setup-miniconda@v3
       with:
         auto-update-conda: true
+        auto-activate-base: false
         conda-remove-defaults: true
         channels: conda-forge
         activate-environment: ptypy_env
@@ -69,7 +70,7 @@ jobs:
         # if [ ${{ matrix.conda-env }} == 'full' ] && [ ${{ matrix.python-version }} == '3.9' ]; then
         #   sed -i '/- mpi4py/d' dependencies_${{ matrix.conda-env }}.yml
         # fi
-        conda activate ptypy_env
+        #conda activate ptypy_env
         conda install --solver=classic mpich
         conda env update --file dependencies_${{ matrix.conda-env }}.yml --name ptypy_env
         conda install --solver=classic flake8 pytest pytest-cov
