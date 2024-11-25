@@ -51,10 +51,11 @@ jobs:
       with:
         auto-update-conda: true
         conda-remove-defaults: true
+        channels: conda-forge
         activate-environment: ptypy_env
         python-version: ${{ matrix.python-version }}
-    - name: Make sure conda is updated
-      run: conda --version
+    #- name: Make sure conda is updated
+      #run: conda --version
     - name: Install ${{ matrix.conda-env }} dependencies
       run: |
         # replace python version in dependencies
@@ -68,16 +69,12 @@ jobs:
         # if [ ${{ matrix.conda-env }} == 'full' ] && [ ${{ matrix.python-version }} == '3.9' ]; then
         #   sed -i '/- mpi4py/d' dependencies_${{ matrix.conda-env }}.yml
         # fi
-        #conda create --name ptypy_env -c conda-forge --solver=classic python=${{ matrix.python-version }}
-        #conda activate ptypy_env
+        conda activate ptypy_env
         conda install --solver=classic mpich
         conda env update --file dependencies_${{ matrix.conda-env }}.yml --name ptypy_env
         conda install --solver=classic flake8 pytest pytest-cov
         conda list
         #conda install --solver=classic mpich menuinst
-        #conda env update --file dependencies_${{ matrix.conda-env }}.yml --name base
-        #conda install --solver=classic flake8 pytest pytest-cov
-        #conda list
     - name: Prepare ptypy
       run: |
         # Install ptypy
