@@ -58,6 +58,7 @@ jobs:
     #- name: Make sure conda is updated
       #run: conda --version
     - name: Install ${{ matrix.conda-env }} dependencies
+      shell: bash -el {0}
       run: |
         # replace python version in dependencies
         sed -i 's/python/python=${{ matrix.python-version }}/' dependencies_${{ matrix.conda-env }}.yml
@@ -70,7 +71,8 @@ jobs:
         # if [ ${{ matrix.conda-env }} == 'full' ] && [ ${{ matrix.python-version }} == '3.9' ]; then
         #   sed -i '/- mpi4py/d' dependencies_${{ matrix.conda-env }}.yml
         # fi
-        source activate ptypy_env
+        #source activate ptypy_env
+        conda activate ptypy_env
         conda install --solver=classic mpich
         conda env update --file dependencies_${{ matrix.conda-env }}.yml --name ptypy_env
         conda install --solver=classic flake8 pytest pytest-cov
