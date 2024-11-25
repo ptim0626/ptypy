@@ -33,25 +33,28 @@ jobs:
           - "full"
     name: Python ${{ matrix.python-version }} and ${{ matrix.conda-env }} dependencies
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    #- name: Checkout
+      #uses: actions/checkout@v4
+    #- name: Set up Python ${{ matrix.python-version }}
+      #uses: actions/setup-python@v5
+      #with:
+        #python-version:  ${{ matrix.python-version }}
+    #- name: Add conda to system path
+      #run: |
+        ## $CONDA is an environment variable pointing to the root of the miniconda directory
+        ##echo $CONDA/bin >> $GITHUB_PATH
+        #source $CONDA/etc/profile.d/conda.sh
+        #conda --version
+        #conda info
+    #- name: Run conda init     #run: conda init
+    - uses: conda-incubator/setup-miniconda@v3
       with:
-        python-version:  ${{ matrix.python-version }}
-    - name: Add conda to system path
-      run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        #echo $CONDA/bin >> $GITHUB_PATH
-        source $CONDA/etc/profile.d/conda.sh
-        conda --version
-        conda info
+        auto-update-conda: true
+        python-version: ${{ matrix.python-version }}
     - name: Make sure conda is updated
       run: |
         conda update conda
         conda --version
-    - name: Run conda init
-      run: conda init
     - name: Install ${{ matrix.conda-env }} dependencies
       run: |
         # replace python version in dependencies
