@@ -6,11 +6,12 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
       - dev
-      - hotfixes
+  #pull_request:
+    #branches:
+      #- master
+      #- dev
+      #- hotfixes
   # Also trigger on page_build, as well as release created events
   page_build:
   release:
@@ -25,11 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
           - "3.12"
+          - "3.13"
         conda-env:
           - "core"
           - "full"
@@ -67,7 +65,7 @@ jobs:
         conda install --solver=classic mpich
         conda env update --file dependencies_${{ matrix.conda-env }}.yml --name base
         conda install --solver=classic flake8 pytest pytest-cov
-        conda list	
+        conda list
     - name: Prepare ptypy
       run: |
         # Install ptypy
