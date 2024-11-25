@@ -50,6 +50,8 @@ jobs:
       run: |
         conda update conda
         conda --version
+    - name: Run conda init
+      run: conda init
     - name: Install ${{ matrix.conda-env }} dependencies
       run: |
         # replace python version in dependencies
